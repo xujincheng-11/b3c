@@ -1,0 +1,49 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: item-service #服务名称
+  rabbitmq: #消息队列
+    host: 58.87.117.192
+    username: b2c
+    password: Qwertyuiop
+    virtual-host: b2c
+    template: #有关AmqpTemplate的配置
+      retry: #失败重试
+        enabled: true #设置为true的时候RabbitTemplate能够实现重试
+        initial-interval: 10000ms #第一次与第二次发布消息的时间间隔
+        max-interval: 300000ms #尝试发布消息的最大时间间隔
+        multiplier: 2 #上一次尝试时间间隔的乘数
+    publisher-confirms: true #生产者确认机制，确保消息会正确发送，如果发送失败会有错误回执，从而触发重试
+  datasource: #数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://58.87.117.192:3306/b2c?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: Qq123123
+    druid: #连接池
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: true
+      stat-view-servlet:
+        allow: true
+eureka: #eureka注册服务客户端
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance: #实例,情况
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true # 当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}:${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+
+
+logging: #debug模式
+  level:
+    com.mr.mapper: debug
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

@@ -1,0 +1,22 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: cart-service #购物车服务名称
+  redis: #redis缓存
+    host: 58.87.117.192 #Linux:ip端口
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5 # 每隔5秒拉取服务注册信息,默认30秒
+  instance:
+    prefer-ip-address: true #当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1  #指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${eureka.instance.ip-address}.${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+    lease-renewal-interval-in-seconds: 3 # 每隔3秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+b2c:
+  jwt:
+    pubKeyPath: E:/1908-java-wuyue/idea-workspace/reskey-rsa/rea.pub # 公钥地址
+    cookieName: B2C_TOKEN # cookie的名称

@@ -1,0 +1,30 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: upload-service #服务名称
+  servlet:
+    multipart:
+      max-file-size: 5MB # 限制文件上传的大小
+# Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true # 当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1	#ip定义死，防止拿到主机名
+    instance-id: ${spring.application.name}:${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+
+fdfs: #个轻量级、高性能的开源分布式文件系统,Linux集群
+  so-timeout: 1501 #超时时间或读取时间
+  connect-timeout: 601 #连接超时时间
+  thumb-image: # 缩略图
+    width: 60
+    height: 60
+  tracker-list: # tracker地址
+    - 119.45.205.133:22122
+IMAGE_SERVER_DOMAIN: http://119.45.205.133 #返回url的域名不能再service写死 (服務器)
+#IMAGE_SERVER_DOMAIN: http://image.b2c.com/ #返回url的域名不能再service写死 (虛擬機)

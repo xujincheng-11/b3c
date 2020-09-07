@@ -1,0 +1,29 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: goods-page #服务名称
+  rabbitmq: #消息队列
+    host: 58.87.117.192
+    username: b2c
+    password: Qwertyuiop
+    virtual-host: b2c
+  thymeleaf: #生成静态HTML
+    cache: false #开发时关闭thymeleaf缓存,不然没法看到实时页面
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true #当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 #指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}.${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+b2c: #静态html保存
+  thymeleaf:
+    destPath: E:\1907\exercise\project\b2c001\static-html\item #保存路径
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

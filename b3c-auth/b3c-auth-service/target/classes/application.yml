@@ -1,0 +1,25 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: auth-service #服务名称
+eureka: #eureka客户端
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 10
+  instance: #实例,情况
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true # 当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}:${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+
+b2c:
+  jwt:
+    secret: 9527 # 登录校验的密钥
+    pubKeyPath: E:/1908-java-wuyue/idea-workspace/reskey-rsa/rea.pub # 公钥地址
+    priKeyPath: E:/1908-java-wuyue/idea-workspace/reskey-rsa/rea.pri # 私钥地址
+    expire: 30 # 过期时间,单位分钟
+    cookieName: B2C_TOKEN #cookie名称
+    cookieMaxAge: 1800 #cookie过期时间，单位为秒

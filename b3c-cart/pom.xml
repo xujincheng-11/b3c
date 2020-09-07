@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>b3c</artifactId>
+        <groupId>com.mr</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>b3c-cart</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!--排除starter-web依赖中的Tomcat;(排除tomcat的starter-web)
+        实现Web场景开发，而不需要额外导入Tomcat服务器以及其他Web依赖文件等
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--eureka客户端依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--feign依赖:适用于服务调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--spring提供的redis客户端依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!--授权中心的common项目-->
+        <dependency>
+            <groupId>com.mr</groupId>
+            <artifactId>b3c-auth-common</artifactId>
+            <version>${b3c.latest.version}</version>
+        </dependency>
+        <!--引入b3c-item-interface实体类-->
+        <dependency>
+            <groupId>com.mr.service</groupId>
+            <artifactId>b3c-item-interface</artifactId>
+            <version>${b3c.latest.version}</version>
+        </dependency>
+    </dependencies>
+</project>

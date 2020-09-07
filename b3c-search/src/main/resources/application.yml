@@ -1,0 +1,26 @@
+server:
+  port: 8083 #端口号
+spring:
+  application:
+    name: search-service #服务名称
+  rabbitmq: #消息队列
+    host: 58.87.117.192
+    username: b2c
+    password: Qwertyuiop
+    virtual-host: b2c
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch #集群名与Linux的文件名一致
+      cluster-nodes: 106.55.155.55:9300 #Linux开放连接数据的地址;9300是集群节点间通讯接口;9200：客户端(用户)访问接口
+  jackson:
+    default-property-inclusion: non_null # 配置json处理时忽略空值
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    prefer-ip-address: true #当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 #指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}:${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”

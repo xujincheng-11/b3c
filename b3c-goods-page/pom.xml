@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>b3c</artifactId>
+        <groupId>com.mr</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>b3c-goods-page</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!--排除starter-web依赖中的Tomcat;(排除tomcat的starter-web)
+        实现Web场景开发，而不需要额外导入Tomcat服务器以及其他Web依赖文件等
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- thymeleaf 页面-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--eureka客户端依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!--feign依赖:适用于服务调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!--引入实体类-->
+        <dependency>
+            <groupId>com.mr.service</groupId>
+            <artifactId>b3c-item-interface</artifactId>
+            <version>${b3c.latest.version}</version>
+        </dependency>
+        <!--引入工具类-->
+        <dependency>
+            <groupId>com.mr.common</groupId>
+            <artifactId>b3c-common</artifactId>
+            <version>${b3c.latest.version}</version>
+        </dependency>
+
+        <!--junit测试类依赖:类头部需要添加：@RunWith(SpringRunner.class)和@SpringBootTest注解，测试方法添加@Test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--操作rabbitmq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,54 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway #服务名称
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+  instance: #实例,建议
+    prefer-ip-address: true # 当其它服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}:${server.port} #把服务注册进中心;注册名默认是“IP名:应用名:应用端口名”
+zuul:
+  prefix: /api # 添加路由前缀
+  retryable: true #zuul开启重试机制
+  routes: #路由转发
+    item-service: /item/** # 将商品微服务映射到/item/**,找到相应的服务
+    search-service: /search/** # 将商品微服务映射到/search/**,找到相应的服务
+    user-service: /user/** # 将用户微服务映射到/user/**,找到相应的服务
+    auth-service: /auth/** #将授权中心微服务映射到/auth/**,找到相应的服务
+    cart-service: /cart/** #将购物车微服务映射到/cart/**,找到相应的服务
+    order-service: /order/** #将订单微服务映射到/order/**,找到相应的服务
+  ignored-services: upload-service #网关过滤上传服务,忽略upload-service服务
+  ignored-patterns: /upload/** #服务映射遇到上传这个路径放过或忽略
+  add-host-header: true #将域名设置到host中
+  sensitive-headers:  #set-cookie被默认禁止了,设置为null,意思就是不禁止
+ribbon:  #负载均衡
+  ConnectTimeout: 2500 # 连接超时时间(ms)
+  ReadTimeout: 30000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+hystrix: #熔断器
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 100000 # 熔断超时时长：10000ms
+
+b2c:  #网关的登录拦截器
+  jwt:
+    pubKeyPath: E:/1908-java-wuyue/idea-workspace/reskey-rsa/rea.pub # 公钥地址
+    cookieName: B2C_TOKEN #cookie名称
+  filter: #过滤器
+    allowPaths: #白名单,名单内，则不进行拦截
+      - /api/auth #授权中心服务(包括登录和登录验证)
+      - /api/search #es搜索服务
+      - /api/user/register #用户的注册服务
+      - /api/user/check #用户注册前的查询服务
+      - /api/user/code
+      - /api/item #商品服务
