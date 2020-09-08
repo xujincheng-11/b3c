@@ -95,4 +95,11 @@ public class SpecController {
         return this.specParamService.findById(id);
     }
 
+    @PostMapping("addCollect/{skuId}")
+    public ResponseEntity<Void> addCollect(@PathVariable("skuId") Long skuId){
+
+        specGroupService.addCollect(skuId);
+        return ResponseEntity.ok(null);
+    }
+
 }
